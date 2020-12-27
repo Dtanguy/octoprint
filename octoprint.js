@@ -277,11 +277,17 @@ class OctoPrintServer {
     });
   }
 
-  selectFile() {
+  selectFile(fileName, bPrint) {
     var self = this;
     return new Promise(function (resolve, reject) {
-
-      reject("Not yet implimented")
+      var settings = {"command": "select", "print": bPrint};
+      var path = self.getPath("files") + "/local/" + fileName;
+      self.restPOST(path, settings).then(function (body, err) {
+        resolve(true);
+      })
+      .catch(function (err) {
+        reject(err)
+      });     
     });
   }
 
